@@ -28,28 +28,18 @@ return {
           "--completion-style=detailed",
           "--header-insertion=iwyu",
           "--header-insertion-decorators",
-          "--fallback-style=llvm"
+          "--fallback-style=llvm",
+          "--query-driver=/usr/bin/gcc,/usr/bin/g++" -- add cross-compilers if you use them
         },
         capabilities = capabilities,
-        init_options = {
-          fallbackFlags = { "-std=c++20" },
-          clangdFileStatus = true,
-          usePlaceholders = true,
-          completeUnimported = true,
-          semanticHighlighting = true
-        },
-        settings = {
-          clangd = {
-            fallbackFlags = { "-std=c++20", "--style={BasedOnStyle: LLVM, ColumnLimit: 120}" }
-          }
-        }
+        filetypes = { "c", "cpp", "objc", "objcpp" },
       }
       lspconfig.bashls.setup { capabilities = capabilities }
       lspconfig.gopls.setup { capabilities = capabilities }
       lspconfig.jsonls.setup { capabilities = capabilities }
       lspconfig.neocmake.setup { capabilities = capabilities }
       lspconfig.htmx.setup { capabilities = capabilities }
-      lspconfig.stylelint_lsp.setup { filetypes = { "scss", "css" }, 
+      lspconfig.stylelint_lsp.setup { filetypes = { "scss", "css" },
         on_attach = function(client)
           client.server_capabilities.document_formatting = false
         end,
