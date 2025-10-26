@@ -45,6 +45,7 @@ return {
           -- { name = 'snippy' }, -- For snippy users.
         }, {
           { name = 'buffer' },
+          { name = 'render-markdown' },
         })
       })
     end

@@ -5,11 +5,12 @@ return
   priority = 1000,
   config = function()
     require("catppuccin").setup {
-      flavour = "mocha",
+--[[      flavour = "mocha",
       color_overrides = {
         mocha = {
           base = "#000000",
         }
+           
       },
       highlight_overrides = {
         mocha = function(mocha)
@@ -17,7 +18,7 @@ return
             WinSeparator = { fg = mocha.mantle},
           }
         end
-      },
+      },]]
       integrations = {
         cmp = true,
         dap = true,

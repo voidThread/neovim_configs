@@ -3,6 +3,7 @@ return {
     "mfussenegger/nvim-dap",
     dependencies = {
       "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
     },
     config = function()
       local dap = require("dap")
@@ -37,11 +38,30 @@ return {
           program = function()
             return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
           end,
-          cwd = '${workspaceFolder}/build',
+          -- cwd = '${workspaceFolder}/build',
+          cwd = '${workspaceFolder}/',
           stopOnEntry = false,
           terminal = 'integrated',
           -- Arguments passed to the program (optional)
-          args = {"random_data_1.json"},
+          args = function()
+            return vim.split(vim.fn.input('Arguments: '), " ")
+          end,
+        },
+      }
+
+      dap.configurations.c = {
+        {
+          name = "Launch file",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          end,
+          cwd = '${workspaceFolder}/',
+          stopOnEntry = false,
+          terminal = 'integrated',
+          -- Arguments passed to the program (optional)
+          args = {},
         },
       }
 

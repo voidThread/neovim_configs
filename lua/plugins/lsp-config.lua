@@ -20,10 +20,42 @@ return {
       local lspconfig = require("lspconfig")
       lspconfig.lua_ls.setup { capabilities = capabilities }
       lspconfig.rust_analyzer.setup { capabilities = capabilities }
-      lspconfig.clangd.setup { capabilities = capabilities }
+      lspconfig.clangd.setup {
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--clang-tidy",
+          "--completion-style=detailed",
+          "--header-insertion=iwyu",
+          "--header-insertion-decorators",
+          "--fallback-style=llvm"
+        },
+        capabilities = capabilities,
+        init_options = {
+          fallbackFlags = { "-std=c++20" },
+          clangdFileStatus = true,
+          usePlaceholders = true,
+          completeUnimported = true,
+          semanticHighlighting = true
+        },
+        settings = {
+          clangd = {
+            fallbackFlags = { "-std=c++20", "--style={BasedOnStyle: LLVM, ColumnLimit: 120}" }
+          }
+        }
+      }
       lspconfig.bashls.setup { capabilities = capabilities }
       lspconfig.gopls.setup { capabilities = capabilities }
       lspconfig.jsonls.setup { capabilities = capabilities }
+      lspconfig.neocmake.setup { capabilities = capabilities }
+      lspconfig.htmx.setup { capabilities = capabilities }
+      lspconfig.stylelint_lsp.setup { filetypes = { "scss", "css" }, 
+        on_attach = function(client)
+          client.server_capabilities.document_formatting = false
+        end,
+        capabilities = capabilities }
+      lspconfig.ts_ls.setup { capabilities = capabilities }
+      lspconfig.marksman.setup {}
 
       -- Use LspAttach autocommand to only map the following keys
       -- after the language server attaches to the current buffer
