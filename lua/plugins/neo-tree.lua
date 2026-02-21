@@ -21,10 +21,12 @@ return {
       vim.api.nvim_create_autocmd("VimEnter", {
         callback = function(data)
           if vim.fn.isdirectory(data.file) == 1 then
+            vim.fn.chdir(data.file)
             vim.cmd.enew()
             require("neo-tree.command").execute({
               source = "filesystem",
               position = "left",
+              dir = data.file,
               reveal = true,
             })
           end
